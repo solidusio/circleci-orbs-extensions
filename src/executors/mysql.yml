@@ -1,0 +1,7 @@
+docker:
+  - image: circleci/ruby:2.4.2-node-browsers
+  - image: circleci/mysql:5.7-ram
+    environment:
+      RAILS_ENV: test
+      DB: mysql
+      DB_HOST: 127.0.0.1
