@@ -2,6 +2,7 @@ description: >
   Cycle all Solidus versions and run specs
 
 steps:
+  - checkout
   - run:
       name: Runs tests on Solidus 2.4
       command: |
