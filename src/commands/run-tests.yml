@@ -1,0 +1,40 @@
+description: >
+  Cycle all Solidus versions and run specs
+
+steps:
+  - run:
+      name: Runs tests on Solidus 2.4
+      command: |
+        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+      environment:
+        SOLIDUS_BRANCH: v2.4
+  - run:
+      name: Runs tests on Solidus 2.5
+      command: |
+        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+      environment:
+        SOLIDUS_BRANCH: v2.5
+  - run:
+      name: Runs tests on Solidus 2.6
+      command: |
+        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+      environment:
+        SOLIDUS_BRANCH: v2.6
+  - run:
+      name: Runs tests on Solidus 2.7
+      command: |
+        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+      environment:
+        SOLIDUS_BRANCH: v2.7
+  - run:
+      name: Runs tests on Solidus 2.8
+      command: |
+        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+      environment:
+        SOLIDUS_BRANCH: v2.8
+  - run:
+      name: Runs tests on Solidus master
+      command: |
+        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+      environment:
+        SOLIDUS_BRANCH: master

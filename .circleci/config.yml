@@ -1,0 +1,68 @@
+version: 2.1
+
+orbs:
+  orb-tools: circleci/orb-tools@volatile
+
+workflows:
+  lint_pack-validate_publish-dev:
+    jobs:
+      - orb-tools/lint
+
+      - orb-tools/pack:
+          requires:
+            - orb-tools/lint
+
+      - orb-tools/publish-dev:
+          orb-name: solidusio/extensions
+          requires:
+            - orb-tools/pack
+
+      - orb-tools/trigger-integration-workflow:
+          name: trigger-integration-dev
+          ssh-fingerprints: 93:a5:e3:a0:b6:25:b7:19:b6:61:3e:69:cb:be:7e:25
+          requires:
+            - orb-tools/publish-dev
+          filters:
+            branches:
+              ignore: master
+
+      - orb-tools/trigger-integration-workflow:
+          name: trigger-integration-master
+          ssh-fingerprints: 93:a5:e3:a0:b6:25:b7:19:b6:61:3e:69:cb:be:7e:25
+          tag: master
+          requires:
+            - orb-tools/publish-dev
+          filters:
+            branches:
+              only: master
+
+  integration-tests_prod-release:
+    jobs:
+      - orb-tools/dev-promote-prod:
+          name: dev-promote-patch
+          orb-name: solidusio/extensions
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-patch.*/
+
+      - orb-tools/dev-promote-prod:
+          name: dev-promote-minor
+          release: minor
+          orb-name: solidusio/extensions
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-minor.*/
+
+      - orb-tools/dev-promote-prod:
+          name: dev-promote-major
+          release: major
+          orb-name: solidusio/extensions
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /master-major.*/
