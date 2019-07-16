@@ -4,12 +4,6 @@ description: >
 steps:
   - checkout
   - run:
-      name: Runs tests on Solidus v2.4
-      command: |
-        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
-      environment:
-        SOLIDUS_BRANCH: v2.4
-  - run:
       name: Runs tests on Solidus v2.5
       command: |
         bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
@@ -33,6 +27,12 @@ steps:
         bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
       environment:
         SOLIDUS_BRANCH: v2.8
+  - run:
+      name: Runs tests on Solidus v2.9
+      command: |
+        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+      environment:
+        SOLIDUS_BRANCH: v2.9
   - run:
       name: Runs tests on Solidus master
       command: |
