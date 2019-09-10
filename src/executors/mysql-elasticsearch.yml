@@ -1,5 +1,5 @@
 docker:
-  - image: circleci/ruby:2.4.2-node-browsers
+  - image: circleci/ruby:2.4.7-node-browsers
   - image: docker.elastic.co/elasticsearch/elasticsearch:6.8.0
   - image: circleci/mysql:5.7-ram
     environment:
