@@ -3,39 +3,99 @@ description: >
 
 steps:
   - checkout
+
+  # Solidus v2.5
+  - restore_cache:
+      keys:
+        - gems-v1-solidus-v2-5-{{ .Branch }}
+        - gems-v1-solidus-v2-5-
   - run:
       name: Runs tests on Solidus v2.5
       command: |
-        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+        bundle install --path=vendor/bundle && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
       environment:
         SOLIDUS_BRANCH: v2.5
+  - save_cache:
+      key: gems-v1-solidus-v2-5-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
+
+  # Solidus v2.6
+  - restore_cache:
+      keys:
+        - gems-v1-solidus-v2-6-{{ .Branch }}
+        - gems-v1-solidus-v2-6-
   - run:
       name: Runs tests on Solidus v2.6
       command: |
-        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+        bundle install --path=vendor/bundle && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
       environment:
         SOLIDUS_BRANCH: v2.6
+  - save_cache:
+      key: gems-v1-solidus-v2-6-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
+
+  # Solidus v2.7
+  - restore_cache:
+      keys:
+        - gems-v1-solidus-v2-7-{{ .Branch }}
+        - gems-v1-solidus-v2-7-
   - run:
       name: Runs tests on Solidus v2.7
       command: |
-        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+        bundle install --path=vendor/bundle && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
       environment:
         SOLIDUS_BRANCH: v2.7
+  - save_cache:
+      key: gems-v1-solidus-v2-7-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
+
+  # Solidus v2.8
+  - restore_cache:
+      keys:
+        - gems-v1-solidus-v2-8-{{ .Branch }}
+        - gems-v1-solidus-v2-8-
   - run:
       name: Runs tests on Solidus v2.8
       command: |
-        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+        bundle install --path=vendor/bundle && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
       environment:
         SOLIDUS_BRANCH: v2.8
+  - save_cache:
+      key: gems-v1-solidus-v2-8-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
+
+  # Solidus v2.9
+  - restore_cache:
+      keys:
+        - gems-v1-solidus-v2-9-{{ .Branch }}
+        - gems-v1-solidus-v2-9-
   - run:
       name: Runs tests on Solidus v2.9
       command: |
-        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+        bundle install --path=vendor/bundle && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
       environment:
         SOLIDUS_BRANCH: v2.9
+  - save_cache:
+      key: gems-v1-solidus-v2-9-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
+
+  # Solidus master
+  - restore_cache:
+      keys:
+        - gems-v1-solidus-master-{{ .Branch }}
+        - gems-v1-solidus-master-
   - run:
       name: Runs tests on Solidus master
       command: |
-        bundle install && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
+        bundle install --path=vendor/bundle && bundle exec rake && rm Gemfile.lock && rm -fr spec/dummy
       environment:
         SOLIDUS_BRANCH: master
+  - save_cache:
+      key: gems-v1-solidus-master-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      paths:
+        - vendor/bundle
