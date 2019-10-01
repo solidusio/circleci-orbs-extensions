@@ -4,8 +4,6 @@ description: >
 steps:
   - checkout
   - test-branch:
-      branch: v2.5
-  - test-branch:
       branch: v2.6
   - test-branch:
       branch: v2.7
