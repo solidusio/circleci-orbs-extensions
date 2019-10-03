@@ -11,26 +11,32 @@ steps:
       command: bundle lock
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
+      when: always
   - restore_cache:
       name: 'Solidus <<parameters.branch>>: Restore Bundler cache'
       keys:
         - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
         - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-
+      when: always
   - run:
       name: 'Solidus <<parameters.branch>>:  Install gems'
       command: bundle install --path=vendor/bundle
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
+      when: always
   - save_cache:
       name: 'Solidus <<parameters.branch>>: Save Bundler cache'
       key: gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle
+      when: always
   - run:
       name: 'Runs tests on Solidus <<parameters.branch>>'
       command: bundle exec rake
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
+      when: always
   - run:
       command: rm -f Gemfile.lock && rm -fr spec/dummy
       name: 'Solidus <<parameters.branch>>: Clean up'
+      when: always
