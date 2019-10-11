@@ -1,0 +1,133 @@
+commands:
+  run-tests:
+    description: |
+      Cycle all Solidus versions and run specs
+    steps:
+    - checkout
+    - test-branch:
+        branch: v2.6
+    - test-branch:
+        branch: v2.7
+    - test-branch:
+        branch: v2.8
+    - test-branch:
+        branch: v2.9
+    - test-branch:
+        branch: master
+  test-branch:
+    description: Runs tests for a specific Solidus branch.
+    parameters:
+      branch:
+        type: string
+    steps:
+    - run:
+        command: bundle lock
+        environment:
+          SOLIDUS_BRANCH: <<parameters.branch>>
+        name: 'Solidus <<parameters.branch>>: Generate Gemfile.lock'
+        when: always
+    - restore_cache:
+        keys:
+        - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum
+          "Gemfile.lock" }}
+        - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-
+        name: 'Solidus <<parameters.branch>>: Restore Bundler cache'
+        when: always
+    - run:
+        command: bundle install --path=vendor/bundle
+        environment:
+          SOLIDUS_BRANCH: <<parameters.branch>>
+        name: 'Solidus <<parameters.branch>>:  Install gems'
+        when: always
+    - save_cache:
+        key: gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum
+          "Gemfile.lock" }}
+        name: 'Solidus <<parameters.branch>>: Save Bundler cache'
+        paths:
+        - vendor/bundle
+        when: always
+    - run:
+        command: bundle exec rake
+        environment:
+          SOLIDUS_BRANCH: <<parameters.branch>>
+          TEST_RESULTS_PATH: test-results/gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>/results.xml
+        name: Runs tests on Solidus <<parameters.branch>>
+        when: always
+    - store_test_results:
+        path: test-results/gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>/results.xml
+    - run:
+        command: rm -f Gemfile.lock && rm -fr spec/dummy
+        name: 'Solidus <<parameters.branch>>: Clean up'
+        when: always
+description: An Orb that can be used by extensions to run specs against all the versions
+  of Solidus and databases that we support.
+examples:
+  extension:
+    description: |
+      Copy/paste this code into the .circleci/config.yml of your extension.
+    usage:
+      jobs:
+        run-specs-with-mysql:
+          executor: solidusio_extensions/mysql
+          steps:
+          - solidusio_extensions/run-tests
+        run-specs-with-postgres:
+          executor: solidusio_extensions/postgres
+          steps:
+          - solidusio_extensions/run-tests
+      orbs:
+        solidusio_extensions: solidusio/extensions@volatile
+      version: 2.1
+      workflows:
+        Run specs on supported Solidus versions:
+          jobs:
+          - run-specs-with-postgres
+          - run-specs-with-mysql
+        Weekly run specs against master:
+          jobs:
+          - run-specs-with-postgres
+          - run-specs-with-mysql
+          triggers:
+          - schedule:
+              cron: 0 0 * * 4
+              filters:
+                branches:
+                  only:
+                  - master
+executors:
+  mysql:
+    docker:
+    - image: circleci/ruby:2.5.6-node-browsers
+    - environment:
+        DB: mysql
+        DB_HOST: 127.0.0.1
+        RAILS_ENV: test
+      image: circleci/mysql:5.7-ram
+  mysql-elasticsearch:
+    docker:
+    - image: circleci/ruby:2.5.6-node-browsers
+    - image: docker.elastic.co/elasticsearch/elasticsearch:6.8.0
+    - environment:
+        DB: mysql
+        DB_HOST: 127.0.0.1
+        RAILS_ENV: test
+      image: circleci/mysql:5.7-ram
+  postgres:
+    docker:
+    - image: circleci/ruby:2.5.6-node-browsers
+    - environment:
+        DATABASE_URL: postgresql://root@127.0.0.1/circle_test?pool=5
+        DB: postgres
+        RAILS_ENV: test
+      image: circleci/postgres:9.4.11
+  postgres-elasticsearch:
+    docker:
+    - image: circleci/ruby:2.5.6-node-browsers
+    - image: docker.elastic.co/elasticsearch/elasticsearch:6.8.0
+    - environment:
+        DATABASE_URL: postgresql://root@127.0.0.1/circle_test?pool=5
+        DB: postgres
+        RAILS_ENV: test
+      image: circleci/postgres:9.4.11
+version: 2.1
+

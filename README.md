@@ -59,6 +59,25 @@ workflows:
 Be sure to also enable building the project on CircleCI, otherwise it won't
 do anything.
 
+### Test Results (RSpec)
+
+To enable CircleCI Test Results be sure to include `rspec_junit_formatter` in your gemspec:
+
+    spec.add_development_dependency 'rspec_junit_formatter'
+
+And to properly setup the RSpec Rake task to generate the results XML output:
+
+```rb
+RSpec::Core::RakeTask.new(:specs) do |t|
+  # Ref: https://circleci.com/docs/2.0/configuration-reference/#store_test_results
+  if ENV['TEST_RESULTS_PATH']
+    t.rspec_opts =
+      "--format progress " \
+      "--format RspecJunitFormatter --out #{ENV['TEST_RESULTS_PATH']}"
+  end
+end
+```
+
 ## Contributing
 
 We accept Pull Requests on this repository. Any kind of contrubution is welcome.
