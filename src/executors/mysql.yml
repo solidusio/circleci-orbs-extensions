@@ -1,5 +1,7 @@
 docker:
   - image: circleci/ruby:2.5.6-node-browsers
+    environment:
+      DB: mysql
   - image: circleci/mysql:5.7-ram
     environment:
       RAILS_ENV: test
