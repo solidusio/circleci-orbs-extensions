@@ -1,0 +1,6 @@
+description: >
+  Test older releases of Solidus
+
+steps:
+  - test-branch:
+      branch: v2.7
