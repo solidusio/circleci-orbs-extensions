@@ -1,0 +1,7 @@
+description: >
+  Save test results
+
+steps:
+  - store_test_results:
+      path: test-results
+
