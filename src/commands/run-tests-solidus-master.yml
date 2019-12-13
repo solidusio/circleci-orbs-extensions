@@ -1,0 +1,7 @@
+description: >
+  Test the edge version of Solidus
+
+steps:
+  - test-branch:
+      branch: master
+

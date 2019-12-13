@@ -3,12 +3,7 @@ description: >
 
 steps:
   - checkout
-  - test-branch:
-      branch: v2.7
-  - test-branch:
-      branch: v2.8
-  - test-branch:
-      branch: v2.9
-  - test-branch:
-      branch: master
+  - run-tests-solidus-older
+  - run-tests-solidus-current
+  - run-tests-solidus-master
   - store-test-results
