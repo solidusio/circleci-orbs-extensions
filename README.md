@@ -80,7 +80,9 @@ end
 
 ## Contributing
 
-We accept Pull Requests on this repository. Any kind of contrubution is welcome.
+We accept Pull Requests on this repository. Any kind of contribution is welcome.
+
+📝 **NOTE:** Currently the first push to a new branch will likely incur into this issue: https://github.com/iynere/compare-url/issues/25. The second push usually fixes the CI.
 
 ## Publishing the solidusio/extensions Orb
 
