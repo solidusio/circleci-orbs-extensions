@@ -80,7 +80,9 @@ end
 
 ## Contributing
 
-We accept Pull Requests on this repository. Any kind of contrubution is welcome.
+We accept Pull Requests on this repository. Any kind of contribution is welcome.
+
+📝 **NOTE:** Currently the first push to a new branch will likely incur into this issue: https://github.com/iynere/compare-url/issues/25. The second push usually fixes the CI.
 
 ## Publishing the solidusio/extensions Orb
 
@@ -88,11 +90,11 @@ The [orb-tools Orb](https://github.com/CircleCI-Public/orb-tools-orb) is used
 for publishing development and production versions of this Orb.
 
 PRs will create a development release of the Orb, while merging in master will
-release a new version of the Orb, using semver and following these rule:
+release a new version of the Orb, using semver and following these rules:
 
-> Modifications to jobs or commands trigger a potential major release;
-> modifications to executors, examples, or @orb.yml trigger a minor release;
-> modifications to the orb’s config.yml file trigger a patch release;
+- Modifications to jobs or commands trigger a potential major release
+- Modifications to executors, examples, or @orb.yml trigger a minor release
+- Modifications to the orb’s config.yml file trigger a patch release
 
 ## License
 
