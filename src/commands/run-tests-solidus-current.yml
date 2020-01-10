@@ -1,0 +1,6 @@
+description: >
+  Test latest release of Solidus
+
+steps:
+  - test-branch:
+      branch: v2.9
