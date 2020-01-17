@@ -3,8 +3,8 @@ description: >
 
 steps:
   - test-branch:
-      branch: v2.9
+      branch: v2.7
   - test-branch:
       branch: v2.8
   - test-branch:
-      branch: v2.7
+      branch: v2.9
