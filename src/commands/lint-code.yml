@@ -1,0 +1,8 @@
+description: >
+  Check code style
+
+steps:
+  - checkout
+  - test-branch:
+      command: bundle exec rubocop -ESP
+      command_verb: Check code style
