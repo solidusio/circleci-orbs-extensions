@@ -4,6 +4,13 @@ description:
 parameters:
   branch:
     type: string
+    default: master
+  command:
+    type: string
+    default: bundle exec rake
+  command_verb:
+    type: string
+    default: Runs tests
 
 steps:
   - run:
@@ -31,8 +38,8 @@ steps:
         - vendor/bundle
       when: always
   - run:
-      name: 'Runs tests on Solidus <<parameters.branch>>'
-      command: bundle exec rake
+      name: '<<parameters.command_verb>> on Solidus <<parameters.branch>>'
+      command: <<parameters.command>>
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
         TEST_RESULTS_PATH: test-results/gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>/results.xml
