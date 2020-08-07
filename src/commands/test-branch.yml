@@ -23,6 +23,7 @@ steps:
       name: 'Solidus <<parameters.branch>>: Restore Bundler cache'
       keys:
         - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-master
         - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-
       when: always
   - run:
