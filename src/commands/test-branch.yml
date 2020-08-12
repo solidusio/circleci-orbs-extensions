@@ -23,11 +23,14 @@ steps:
       name: 'Solidus <<parameters.branch>>: Restore Bundler cache'
       keys:
         - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-master
         - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-
       when: always
   - run:
       name: 'Solidus <<parameters.branch>>:  Install gems'
-      command: bundle install --path=vendor/bundle
+      command: |
+        bundle install --path=vendor/bundle-<<parameters.branch>>
+        bundle clean
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
       when: always
@@ -35,7 +38,7 @@ steps:
       name: 'Solidus <<parameters.branch>>: Save Bundler cache'
       key: gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
       paths:
-        - vendor/bundle
+        - vendor/bundle-<<parameters.branch>>
       when: always
   - run:
       name: '<<parameters.command_verb>> on Solidus <<parameters.branch>>'
