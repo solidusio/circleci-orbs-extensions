@@ -29,7 +29,9 @@ steps:
   - run:
       name: 'Solidus <<parameters.branch>>:  Install gems'
       command: |
-        bundle install --path=vendor/bundle-<<parameters.branch>>
+        # Migrate old bundles to the new path (previously was vendor/bundle-<<parameters.branch>>)
+        test -d vendor/bundle-<<parameters.branch>> && mv vendor/bundle{-,/}<<parameters.branch>> || true
+        bundle install --path=vendor/bundle/<<parameters.branch>>
         bundle clean
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
@@ -38,7 +40,7 @@ steps:
       name: 'Solidus <<parameters.branch>>: Save Bundler cache'
       key: gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
       paths:
-        - vendor/bundle-<<parameters.branch>>
+        - vendor/bundle/<<parameters.branch>>
       when: always
   - run:
       name: '<<parameters.command_verb>> on Solidus <<parameters.branch>>'
