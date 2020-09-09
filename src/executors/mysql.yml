@@ -4,7 +4,7 @@ docker:
       DB: mysql
       RAILS_ENV: test
       DATABASE_URL: mysql2://root@127.0.0.1/circle_test?pool=5
-  - image: circleci/mysql:5.7-ram
+  - image: circleci/mysql:latest-ram
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_ROOT_HOST: '%'
