@@ -4,7 +4,7 @@ docker:
       DB: mysql
       RAILS_ENV: test
       DATABASE_URL: mysql2://root@127.0.0.1/circle_test?pool=5
-  - image: docker.elastic.co/elasticsearch/elasticsearch:6.8.0
+  - image: docker.elastic.co/elasticsearch/elasticsearch:7.9.1
   - image: circleci/mysql:5.7-ram
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
