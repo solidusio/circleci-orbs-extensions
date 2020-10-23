@@ -3,4 +3,6 @@ description: >
 
 steps:
   - test-branch:
+      branch: v2.10
+  - test-branch:
       branch: v2.9
