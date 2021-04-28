@@ -29,10 +29,6 @@ steps:
   - run:
       name: 'Solidus <<parameters.branch>>:  Install gems'
       command: |
-        # Migrate old bundles to the new path (previously was vendor/bundle-<<parameters.branch>>)
-        mkdir -p vendor/bundle
-        test -d vendor/bundle-<<parameters.branch>> && mv vendor/bundle-<<parameters.branch>> vendor/bundle/<<parameters.branch>> || true
-
         bundle install --path=vendor/bundle/<<parameters.branch>>
         bundle clean
       environment:
