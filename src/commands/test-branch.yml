@@ -22,9 +22,9 @@ steps:
   - restore_cache:
       name: 'Solidus <<parameters.branch>>: Restore Bundler cache'
       keys:
-        - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-        - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-master
-        - gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-
+        - gems-v3-ruby-v2-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        - gems-v3-ruby-v2-6-solidus-<<parameters.branch>>-master
+        - gems-v3-ruby-v2-6-solidus-<<parameters.branch>>-
       when: always
   - run:
       name: 'Solidus <<parameters.branch>>:  Install gems'
@@ -36,7 +36,7 @@ steps:
       when: always
   - save_cache:
       name: 'Solidus <<parameters.branch>>: Save Bundler cache'
-      key: gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      key: gems-v3-ruby-v2-6-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
       paths:
         - vendor/bundle/<<parameters.branch>>
       when: always
@@ -45,7 +45,7 @@ steps:
       command: <<parameters.command>>
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
-        TEST_RESULTS_PATH: test-results/gems-v3-ruby-v2-5-6-solidus-<<parameters.branch>>/results.xml
+        TEST_RESULTS_PATH: test-results/gems-v3-ruby-v2-6-solidus-<<parameters.branch>>/results.xml
       when: always
   - run:
       command: rm -f Gemfile.lock && rm -fr spec/dummy
