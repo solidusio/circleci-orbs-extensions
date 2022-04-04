@@ -6,6 +6,6 @@ docker:
       PGUSER: root
       RAILS_ENV: test
   - image: docker.elastic.co/elasticsearch/elasticsearch:6.8.0
-  - image: circleci/postgres:9.4.11
+  - image: cimg/postgres:14.2
     environment:
       POSTGRES_USER: root
