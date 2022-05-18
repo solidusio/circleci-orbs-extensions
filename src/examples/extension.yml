@@ -4,6 +4,9 @@ usage:
   version: 2.1
 
   orbs:
+    # Required for feature specs.
+    browser-tools: circleci/browser-tools@1.1
+
     # Always take the latest version of the Orb, this allows us to
     # run specs against Solidus supported versions only without the need
     # to change this configuration every time a Solidus version is released
@@ -14,10 +17,12 @@ usage:
     run-specs-with-postgres:
       executor: solidusio_extensions/postgres
       steps:
+        - browser-tools/install-browser-tools
         - solidusio_extensions/run-tests
     run-specs-with-mysql:
       executor: solidusio_extensions/mysql
       steps:
+        - browser-tools/install-browser-tools
         - solidusio_extensions/run-tests
 
   workflows:

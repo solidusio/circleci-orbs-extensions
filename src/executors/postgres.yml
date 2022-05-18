@@ -3,8 +3,8 @@ docker:
     environment:
       DB: postgresql
       PGHOST: 127.0.0.1
-      PGUSER: root
+      PGUSER: postgres
       RAILS_ENV: test
   - image: cimg/postgres:14.2
     environment:
-      POSTGRES_USER: root
+      POSTGRES_USER: postgres
