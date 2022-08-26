@@ -1,68 +1,35 @@
 version: 2.1
-
+setup: true
 orbs:
-  orb-tools: circleci/orb-tools@8
+  orb-tools: circleci/orb-tools@11.1
+  shellcheck: circleci/shellcheck@3.1
+
+filters: &filters
+  tags:
+    only: /.*/
 
 workflows:
-  lint_pack-validate_publish-dev:
+  lint-pack:
     jobs:
-      - orb-tools/lint
-
+      - orb-tools/lint:
+          filters: *filters
       - orb-tools/pack:
-          requires:
-            - orb-tools/lint
-
-      - orb-tools/publish-dev:
+          filters: *filters
+      - orb-tools/review:
+          filters: *filters
+      - shellcheck/check:
+          filters: *filters
+      - orb-tools/publish:
           orb-name: solidusio/extensions
+          vcs-type: << pipeline.project.type >>
           requires:
-            - orb-tools/pack
-
-      - orb-tools/trigger-integration-workflow:
-          name: trigger-integration-dev
-          ssh-fingerprints: 93:a5:e3:a0:b6:25:b7:19:b6:61:3e:69:cb:be:7e:25
-          requires:
-            - orb-tools/publish-dev
-          filters:
-            branches:
-              ignore: master
-
-      - orb-tools/trigger-integration-workflow:
-          name: trigger-integration-master
-          ssh-fingerprints: 93:a5:e3:a0:b6:25:b7:19:b6:61:3e:69:cb:be:7e:25
-          tag: master
-          requires:
-            - orb-tools/publish-dev
-          filters:
-            branches:
-              only: master
-
-  integration-tests_prod-release:
-    jobs:
-      - orb-tools/dev-promote-prod:
-          name: dev-promote-patch
-          orb-name: solidusio/extensions
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /master-patch.*/
-
-      - orb-tools/dev-promote-prod:
-          name: dev-promote-minor
-          release: minor
-          orb-name: solidusio/extensions
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /master-minor.*/
-
-      - orb-tools/dev-promote-prod:
-          name: dev-promote-major
-          release: major
-          orb-name: solidusio/extensions
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /master-major.*/
+            [orb-tools/lint, orb-tools/review, orb-tools/pack, shellcheck/check]
+          # Use a context to hold your publishing token.
+          context: 
+          filters: *filters
+      # Triggers the next workflow in the Orb Development Kit.
+      - orb-tools/continue:
+          pipeline-number: << pipeline.number >>
+          vcs-type: << pipeline.project.type >>
+          requires: [orb-tools/publish]
+          filters: *filters
