@@ -1,6 +1,7 @@
 version: 2.1
 setup: true
 orbs:
+  # https://circleci.com/developer/orbs/orb/circleci/orb-tools
   orb-tools: circleci/orb-tools@11.1
   shellcheck: circleci/shellcheck@3.1
 
@@ -17,6 +18,7 @@ workflows:
           filters: *filters
       - orb-tools/review:
           filters: *filters
+          exclude: RC009 # 64 is too short as the commands line lenth limit
       - shellcheck/check:
           filters: *filters
       - orb-tools/publish:
