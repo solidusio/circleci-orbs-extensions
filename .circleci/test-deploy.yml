@@ -33,7 +33,7 @@ workflows:
           requires:
             - orb-tools/pack
             - command-tests
-          context:
+          enable-pr-comment: false
           filters:
             branches:
               ignore: /.*/
