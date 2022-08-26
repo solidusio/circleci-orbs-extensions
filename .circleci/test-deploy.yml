@@ -11,12 +11,17 @@ jobs:
   # Create a job to test the commands of your orbs.
   # You may want to add additional validation steps to ensure the commands are working as expected.
   command-tests:
-    docker:
-      - image: cimg/base:current
+    executor: extensions/sqlite-memory
     steps:
       - checkout
-      # Run your orb's commands to validate them.
-      - extensions/greet
+      - run:
+          name: Dummy extension project
+          command: |
+            bundle init
+            bundle add rake
+            echo "task(:default) { puts ENV['SOLIDUS_BRANCH'] }" > Rakefile
+            bundle install
+      - extensions/run-tests
 
 workflows:
   test-deploy:
