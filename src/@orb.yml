@@ -2,3 +2,7 @@ version: 2.1
 description:
   An Orb that can be used by extensions to run specs against all the versions
   of Solidus and databases that we support.
+
+display:
+  source_url: https://github.com/solidusio/circleci-orbs-extensions
+
