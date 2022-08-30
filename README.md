@@ -37,6 +37,10 @@ jobs:
     executor: solidusio_extensions/mysql
     steps:
       - solidusio_extensions/run-tests
+  run-specs-with-sqlite:
+    executor: solidusio_extensions/sqlite
+    steps:
+      - solidusio_extensions/run-tests
   lint-code:
     executor: solidusio_extensions/sqlite-memory
     steps:
@@ -47,6 +51,7 @@ workflows:
     jobs:
       - run-specs-with-postgres
       - run-specs-with-mysql
+      - run-specs-with-sqlite
       - lint-code
 
   "Weekly run specs against master":
@@ -58,8 +63,7 @@ workflows:
               only:
                 - master
     jobs:
-      - run-specs-with-postgres
-      - run-specs-with-mysql
+      - run-specs-with-sqlite
 ```
 
 Be sure to also enable building the project on CircleCI, otherwise it won't

@@ -24,12 +24,18 @@ usage:
       steps:
         - browser-tools/install-browser-tools
         - solidusio_extensions/run-tests
+    run-specs-with-sqlite:
+      executor: solidusio_extensions/sqlite
+      steps:
+        - browser-tools/install-browser-tools
+        - solidusio_extensions/run-tests
 
   workflows:
     "Run specs on supported Solidus versions":
       jobs:
         - run-specs-with-postgres
         - run-specs-with-mysql
+        - run-specs-with-sqlite
     "Weekly run specs against master":
       triggers:
         - schedule:
@@ -39,5 +45,4 @@ usage:
                 only:
                   - master
       jobs:
-        - run-specs-with-postgres
-        - run-specs-with-mysql
+        - run-specs-with-sqlite
