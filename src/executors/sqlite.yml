@@ -1,0 +1,6 @@
+description: Run specs with an in-memory SQLite
+docker:
+  - image: cimg/ruby:2.7-browsers
+    environment:
+      RAILS_ENV: test
+      DB: sqlite

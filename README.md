@@ -37,6 +37,10 @@ jobs:
     executor: solidusio_extensions/mysql
     steps:
       - solidusio_extensions/run-tests
+  run-specs-with-sqlite:
+    executor: solidusio_extensions/sqlite
+    steps:
+      - solidusio_extensions/run-tests
   lint-code:
     executor: solidusio_extensions/sqlite-memory
     steps:
@@ -47,6 +51,7 @@ workflows:
     jobs:
       - run-specs-with-postgres
       - run-specs-with-mysql
+      - run-specs-with-sqlite
       - lint-code
 
   "Weekly run specs against master":
@@ -58,8 +63,7 @@ workflows:
               only:
                 - master
     jobs:
-      - run-specs-with-postgres
-      - run-specs-with-mysql
+      - run-specs-with-sqlite
 ```
 
 Be sure to also enable building the project on CircleCI, otherwise it won't
@@ -88,26 +92,20 @@ end
 
 We accept Pull Requests on this repository. Any kind of contribution is welcome.
 
-📝 **NOTE:** Currently the first push to a new branch will likely incur into this issue: https://github.com/iynere/compare-url/issues/25. The second push usually fixes the CI.
-
 ## Publishing the solidusio/extensions Orb
 
 The [orb-tools Orb](https://github.com/CircleCI-Public/orb-tools-orb) is used
 for publishing development and production versions of this Orb.
 
-PRs will create a development release of the Orb, while merging in master will
-release a new version of the Orb, using semver and following these rules:
-
-- Modifications to jobs or commands trigger a potential major release
-- Modifications to executors, examples, or @orb.yml trigger a minor release
-- Modifications to the orb’s config.yml file trigger a patch release
+PRs will create a development release of the Orb, while creating GitHub tags and releases
+will trigger publishing a new version in the Orb registry.
 
 ### Publish a development version from the CLI
 
 Reference: https://circleci.com/docs/2.0/creating-orbs/#using-the-cli-to-publish-orbs
 
 1. Setup the CircleCI CLI (https://circleci.com/docs/2.0/creating-orbs/#step-1---set-up-the-circleci-cli)
-2. Buid a one-file version of the orb with `circleci config pack src/ > build/orb.yml`
+2. Build a one-file version of the orb with `circleci config pack src/ > build/orb.yml`
 3. Publish the ORB with a development version (e.g. one linked to your current PR): `circleci orb publish build/orb.yml solidusio/extensions@dev:pr-123`
 4. Test the ORB on a project updating the version `solidusio_extensions: solidusio/extensions@dev:pr-123`
 
