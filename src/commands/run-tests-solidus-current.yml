@@ -3,4 +3,4 @@ description: >
 
 steps:
   - test-branch:
-      branch: v3.1
+      branch: v3.2
