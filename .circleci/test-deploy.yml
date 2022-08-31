@@ -7,27 +7,45 @@ filters: &filters
   tags:
     only: /.*/
 
-jobs:
-  # Create a job to test the commands of your orbs.
-  # You may want to add additional validation steps to ensure the commands are working as expected.
-  command-tests:
-    executor: extensions/sqlite-memory
+commands:
+  create-dummy-extension:
     steps:
-      - checkout
       - run:
-          name: Dummy extension project
+          name: Create dummy extension
           command: |
-            bundle init
-            bundle add rake
-            echo "task(:default) { puts ENV['SOLIDUS_BRANCH'] }" > Rakefile
-            bundle install
-      - extensions/run-tests
+            echo 'source "https://rubygems.org"' >> Gemfile
+            echo 'gem "solidus", github:"solidusio/solidus", branch:ENV.fetch("SOLIDUS_BRANCH", "master")' >> Gemfile
+            echo "require 'solidus'; task(:default) { p Spree::VERSION }" > Rakefile
+
+jobs:
+  test-run-with-postgres:
+    executor: extensions/postgres
+    steps:
+      - create-dummy-extension
+      - extensions/run-tests-solidus-older
+      - extensions/store-test-results
+  test-run-with-mysql:
+    executor: extensions/mysql
+    steps:
+      - create-dummy-extension
+      - extensions/run-tests-solidus-current
+      - extensions/store-test-results
+  test-run-with-sqlite:
+    executor: extensions/sqlite
+    steps:
+      - create-dummy-extension
+      - extensions/run-tests-solidus-master
+      - extensions/store-test-results
 
 workflows:
   test-deploy:
     jobs:
       # Make sure to include "filters: *filters" in every test job you want to run as part of your deployment.
-      - command-tests:
+      - test-run-with-postgres:
+          filters: *filters
+      - test-run-with-mysql:
+          filters: *filters
+      - test-run-with-sqlite:
           filters: *filters
       - orb-tools/pack:
           filters: *filters
@@ -37,7 +55,9 @@ workflows:
           pub-type: production
           requires:
             - orb-tools/pack
-            - command-tests
+            - test-run-with-postgres
+            - test-run-with-mysql
+            - test-run-with-sqlite
           enable-pr-comment: false
           filters:
             branches:
