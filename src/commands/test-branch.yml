@@ -15,7 +15,7 @@ parameters:
 steps:
   - run:
       name: 'Solidus <<parameters.branch>>: Generate Gemfile.lock'
-      command: bundle lock
+      command: bundle lock --update
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
       when: always
@@ -30,7 +30,6 @@ steps:
       name: 'Solidus <<parameters.branch>>:  Install gems'
       command: |
         bundle install --path=vendor/bundle/<<parameters.branch>> --clean
-        bundle update solidus
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
       when: always
