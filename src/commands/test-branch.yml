@@ -27,9 +27,11 @@ steps:
         - gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-
       when: always
   - run:
-      name: 'Solidus <<parameters.branch>>:  Install gems'
+      name: 'Solidus <<parameters.branch>>: Install gems'
       command: |
-        bundle install --path=vendor/bundle/<<parameters.branch>> --clean
+        bundle config set --local clean 'true'
+        bundle config set --local path 'vendor/bundle/<<parameters.branch>>'
+        bundle install
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
       when: always
