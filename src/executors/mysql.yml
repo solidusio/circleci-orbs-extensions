@@ -1,11 +1,20 @@
 description: Run specs with MySQL
+
+parameters:
+  ruby_version:
+    type: string
+    default: "2.7"
+  mysql_version:
+    type: string
+    default: "5.7"
+
 docker:
-  - image: cimg/ruby:2.7-browsers
+  - image: cimg/ruby:<<parameters.ruby_version>>-browsers
     environment:
       DB: mysql
       RAILS_ENV: test
       DATABASE_URL: mysql2://root@127.0.0.1/circle_test?pool=5
-  - image: cimg/mysql:5.7
+  - image: cimg/mysql:<<parameters.mysql_version>>
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: true
       MYSQL_ROOT_HOST: '%'
