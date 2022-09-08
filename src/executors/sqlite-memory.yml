@@ -1,6 +1,12 @@
 description: Run specs with an in-memory SQLite
+
+parameters:
+  ruby_version:
+    type: string
+    default: "2.7"
+
 docker:
-  - image: cimg/ruby:2.7-browsers
+  - image: cimg/ruby:<<parameters.ruby_version>>-browsers
     environment:
       RAILS_ENV: test
       DB: sqlite

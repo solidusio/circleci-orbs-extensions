@@ -1,11 +1,20 @@
 description: Run specs with PostgreSQL
+
+parameters:
+  ruby_version:
+    type: string
+    default: "2.7"
+  postgres_version:
+    type: string
+    default: "14.2"
+
 docker:
-  - image: cimg/ruby:2.7-browsers
+  - image: cimg/ruby:<<parameters.ruby_version>>-browsers
     environment:
       DB: postgresql
       PGHOST: 127.0.0.1
       PGUSER: postgres
       RAILS_ENV: test
-  - image: cimg/postgres:14.2
+  - image: cimg/postgres:<<parameters.postgres_version>>
     environment:
       POSTGRES_USER: postgres
