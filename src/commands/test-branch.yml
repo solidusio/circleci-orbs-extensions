@@ -18,6 +18,7 @@ steps:
       command: bundle lock --update
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
+        SKIP_SOLIDUS_BOLT: "1"
       when: always
   - restore_cache:
       name: 'Solidus <<parameters.branch>>: Restore Bundler cache'
