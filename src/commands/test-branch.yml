@@ -50,9 +50,13 @@ steps:
         TEST_RESULTS_PATH: test-results/gems-v3-ruby-v2-7-solidus-<<parameters.branch>>/results.xml
       when: always
   - store_artifacts:
-      name: 'Solidus <<parameters.branch>>: Store spec screenshots'
+      name: 'Solidus <<parameters.branch>>: Store Rails screenshots'
       path: spec/dummy/tmp/screenshots
-      destination: screenshots
+      destination: screenshots/rails
+  - store_artifacts:
+      name: "Solidus <<parameters.branch>>: Store Capybara screenshots"
+      path: spec/dummy/tmp/capybara
+      destination: screenshots/capybara
   - run:
       command: rm -f Gemfile.lock && rm -fr spec/dummy
       name: 'Solidus <<parameters.branch>>: Clean up'
