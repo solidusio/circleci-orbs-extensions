@@ -58,6 +58,15 @@ steps:
       path: spec/dummy/tmp/capybara
       destination: screenshots/capybara
   - run:
+      name: 'Drop database'
+      environment:
+        SOLIDUS_BRANCH: <<parameters.branch>>
+      command: |
+        cd spec/dummy
+        bin/rails db:environment:set RAILS_ENV=test
+        bin/rails db:drop
+      when: always
+  - run:
       command: rm -f Gemfile.lock && rm -fr spec/dummy
       name: 'Solidus <<parameters.branch>>: Clean up'
       when: always
