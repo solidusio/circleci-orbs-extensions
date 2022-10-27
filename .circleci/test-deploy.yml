@@ -12,10 +12,7 @@ commands:
     steps:
       - run:
           name: Create dummy extension
-          command: |
-            echo 'source "https://rubygems.org"' >> Gemfile
-            echo 'gem "solidus", github:"solidusio/solidus", branch:ENV.fetch("SOLIDUS_BRANCH", "master")' >> Gemfile
-            echo "require 'solidus'; task(:default) { p Spree::VERSION }" > Rakefile
+          command: bin/create-dummy-extension
 
 jobs:
   test-run-with-postgres:
