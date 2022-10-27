@@ -19,6 +19,8 @@ jobs:
     executor: extensions/postgres
     steps:
       - checkout
+      - run:
+          bundle install
       - create-dummy-extension
       - run:
           cd solidus_dummy_extension
@@ -28,6 +30,8 @@ jobs:
     executor: extensions/mysql
     steps:
       - checkout
+      - run:
+          bundle install
       - create-dummy-extension
       - run:
           cd solidus_dummy_extension
@@ -37,6 +41,8 @@ jobs:
     executor: extensions/sqlite
     steps:
       - checkout
+      - run:
+          bundle install
       - create-dummy-extension
       - run:
           cd solidus_dummy_extension
