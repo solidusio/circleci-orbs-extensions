@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+rm -rf solidus_dummy_extension
+bundle exec solidus extension dummy_extension
+sed -i 's/TODO: //g' solidus_dummy_extension/solidus_dummy_extension.gemspec
+cd solidus_dummy_extension
+bundle install
