@@ -18,6 +18,7 @@ jobs:
   test-run-with-postgres:
     executor: extensions/postgres
     steps:
+      - checkout
       - create-dummy-extension
       - run:
           cd solidus_dummy_extension
@@ -26,6 +27,7 @@ jobs:
   test-run-with-mysql:
     executor: extensions/mysql
     steps:
+      - checkout
       - create-dummy-extension
       - run:
           cd solidus_dummy_extension
@@ -34,6 +36,7 @@ jobs:
   test-run-with-sqlite:
     executor: extensions/sqlite
     steps:
+      - checkout
       - create-dummy-extension
       - run:
           cd solidus_dummy_extension
