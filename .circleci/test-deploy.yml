@@ -19,18 +19,24 @@ jobs:
     executor: extensions/postgres
     steps:
       - create-dummy-extension
+      - run:
+          cd solidus_dummy_extension
       - extensions/run-tests-solidus-older
       - extensions/store-test-results
   test-run-with-mysql:
     executor: extensions/mysql
     steps:
       - create-dummy-extension
+      - run:
+          cd solidus_dummy_extension
       - extensions/run-tests-solidus-current
       - extensions/store-test-results
   test-run-with-sqlite:
     executor: extensions/sqlite
     steps:
       - create-dummy-extension
+      - run:
+          cd solidus_dummy_extension
       - extensions/run-tests-solidus-master
       - extensions/store-test-results
 
