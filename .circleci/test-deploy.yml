@@ -7,34 +7,27 @@ filters: &filters
   tags:
     only: /.*/
 
-commands:
-  create-dummy-extension:
-    steps:
-      - run:
-          name: Create dummy extension
-          command: |
-            echo 'source "https://rubygems.org"' >> Gemfile
-            echo 'gem "solidus", github:"solidusio/solidus", branch:ENV.fetch("SOLIDUS_BRANCH", "master")' >> Gemfile
-            echo "require 'solidus'; task(:default) { p Spree::VERSION }" > Rakefile
-
 jobs:
   test-run-with-postgres:
     executor: extensions/postgres
     steps:
-      - create-dummy-extension
-      - extensions/run-tests-solidus-older
+      - checkout
+      - extensions/run-tests-solidus-older:
+          working_directory: '~/project/solidus_dummy_extension'
       - extensions/store-test-results
   test-run-with-mysql:
     executor: extensions/mysql
     steps:
-      - create-dummy-extension
-      - extensions/run-tests-solidus-current
+      - checkout
+      - extensions/run-tests-solidus-current:
+          working_directory: '~/project/solidus_dummy_extension'
       - extensions/store-test-results
   test-run-with-sqlite:
     executor: extensions/sqlite
     steps:
-      - create-dummy-extension
-      - extensions/run-tests-solidus-master
+      - checkout
+      - extensions/run-tests-solidus-master:
+          working_directory: '~/project/solidus_dummy_extension'
       - extensions/store-test-results
 
 workflows:
