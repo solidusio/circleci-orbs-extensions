@@ -1,6 +1,12 @@
 description: >
   Test latest release of Solidus
 
+parameters:
+  working_directory:
+    type: string
+    default: '~/project'
+
 steps:
   - test-branch:
       branch: v3.2
+      working_directory: <<parameters.working_directory>>

@@ -1,7 +1,13 @@
 description: >
   Test the edge version of Solidus
 
+parameters:
+  working_directory:
+    type: string
+    default: '~/project'
+
 steps:
   - test-branch:
       branch: master
+      working_directory: <<parameters.working_directory>>
 
