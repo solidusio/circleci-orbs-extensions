@@ -11,64 +11,77 @@ parameters:
   command_verb:
     type: string
     default: Runs tests
+  rails_version:
+    type: string
+    default: ''
+  working_directory:
+    type: string
+    default: '~/project'
 
 steps:
   - run:
       name: 'Solidus <<parameters.branch>>: Generate Gemfile.lock'
+      working_directory: <<parameters.working_directory>>
       command: bundle lock --update
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
+        RAILS_VERSION: <<parameters.rails_version>>
         SKIP_SOLIDUS_BOLT: "1"
       when: always
   - restore_cache:
       name: 'Solidus <<parameters.branch>>: Restore Bundler cache'
       keys:
-        - gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+        - gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "<<parameters.working_directory>>/Gemfile.lock" }}
         - gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-master
         - gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-
       when: always
   - run:
       name: 'Solidus <<parameters.branch>>: Install gems'
+      working_directory: <<parameters.working_directory>>
       command: |
         bundle config set --local clean 'true'
         bundle config set --local path 'vendor/bundle/<<parameters.branch>>'
         bundle install
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
+        RAILS_VERSION: <<parameters.rails_version>>
       when: always
   - save_cache:
       name: 'Solidus <<parameters.branch>>: Save Bundler cache'
-      key: gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+      key: gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "<<parameters.working_directory>>/Gemfile.lock" }}
       paths:
-        - vendor/bundle/<<parameters.branch>>
+        - <<parameters.working_directory>>/vendor/bundle/<<parameters.branch>>
       when: always
   - run:
       name: '<<parameters.command_verb>> on Solidus <<parameters.branch>>'
+      working_directory: <<parameters.working_directory>>
       command: <<parameters.command>>
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
+        RAILS_VERSION: <<parameters.rails_version>>
         TEST_RESULTS_PATH: test-results/gems-v3-ruby-v2-7-solidus-<<parameters.branch>>/results.xml
       when: always
   - store_artifacts:
       name: 'Solidus <<parameters.branch>>: Store Rails screenshots'
-      path: spec/dummy/tmp/screenshots
+      path: <<parameters.working_directory>>/spec/dummy/tmp/screenshots
       destination: screenshots/rails
   - store_artifacts:
       name: "Solidus <<parameters.branch>>: Store Capybara screenshots"
-      path: spec/dummy/tmp/capybara
+      path: <<parameters.working_directory>>/spec/dummy/tmp/capybara
       destination: screenshots/capybara
   - run:
       name: 'Drop database'
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
+        RAILS_VERSION: <<parameters.rails_version>>
+      working_directory: <<parameters.working_directory>>
       command: |
-        if [[ -d "spec/dummy" ]]; then
-          cd spec/dummy && \
-            bin/rails db:environment:set RAILS_ENV=test && \
-            bin/rails db:drop
-        fi
+        cd spec/dummy && \
+          bin/rails db:environment:set RAILS_ENV=test && \
+          bin/rails db:drop
       when: always
   - run:
+      working_directory: <<parameters.working_directory>>
       command: rm -f Gemfile.lock && rm -fr spec/dummy
       name: 'Solidus <<parameters.branch>>: Clean up'
       when: always

@@ -1,7 +1,14 @@
 description: >
   Test the edge version of Solidus
 
+parameters:
+  working_directory:
+    type: string
+    default: '~/project'
+
 steps:
   - test-branch:
       branch: master
+      rails_version: '~> 7.0'
+      working_directory: <<parameters.working_directory>>
 
