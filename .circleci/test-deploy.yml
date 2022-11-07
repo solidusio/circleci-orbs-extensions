@@ -29,6 +29,12 @@ jobs:
       - extensions/run-tests-solidus-master:
           working_directory: '~/project/solidus_dummy_extension'
       - extensions/store-test-results
+  test-run-linting-code:
+    executor: extensions/sqlite-memory
+    steps:
+      - extensions/lint-code:
+          working_directory: '~/project/solidus_dummy_extension'
+
 
 workflows:
   test-deploy:

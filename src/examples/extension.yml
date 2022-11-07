@@ -35,6 +35,10 @@ usage:
       steps:
         - browser-tools/install-browser-tools
         - solidusio_extensions/run-tests
+  lint-code:
+    executor: solidusio_extensions/sqlite-memory
+    steps:
+      - solidusio_extensions/lint-code
 
   workflows:
     "Run specs on supported Solidus versions":
