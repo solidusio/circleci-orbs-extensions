@@ -13,7 +13,7 @@ parameters:
     default: Runs tests
   rails_version:
     type: string
-    default: ''
+    default: 'master'
   working_directory:
     type: string
     default: '~/project'
