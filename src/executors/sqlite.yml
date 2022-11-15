@@ -9,4 +9,4 @@ docker:
   - image: cimg/ruby:<<parameters.ruby_version>>-browsers
     environment:
       RAILS_ENV: test
-      DB: sqlite
+      DB: sqlite3
