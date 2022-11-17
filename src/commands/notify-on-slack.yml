@@ -1,0 +1,19 @@
+description: >
+  Notify on Slack
+
+parameters:
+  event:
+    type: string
+    default: fail
+  template:
+    type: string
+    default: basic_fail_1
+  branch_pattern:
+    type: string
+    default: master, main, v[0-9]+\.[0-9]+
+
+steps:
+  - notify-on-slack:
+      event: <<parameters.event>>
+      template: <<parameters.template>>
+      branch_pattern: <<parameters.branch_pattern>>
