@@ -4,23 +4,36 @@ orbs:
   # https://circleci.com/developer/orbs/orb/circleci/orb-tools
   orb-tools: circleci/orb-tools@11.1
   shellcheck: circleci/shellcheck@3.1
+  slack: circleci/slack@4.9.3
 
 filters: &filters
   tags:
     only: /.*/
+
+with_notification: &with_notification
+  context: slack-secrets
+  post-steps:
+    - slack/notify:
+        event: fail
+        template: basic_fail_1
+        branch_pattern: master
 
 workflows:
   lint-pack:
     jobs:
       - orb-tools/lint:
           filters: *filters
+          <<: *with_notification
       - orb-tools/pack:
           filters: *filters
+          <<: *with_notification
       - orb-tools/review:
           filters: *filters
           exclude: RC009 # 64 is too short as the commands line lenth limit
+          <<: *with_notification
       - shellcheck/check:
           filters: *filters
+          <<: *with_notification
       - orb-tools/publish:
           orb-name: solidusio/extensions
           vcs-type: << pipeline.project.type >>
@@ -28,9 +41,11 @@ workflows:
           requires:
             [orb-tools/lint, orb-tools/review, orb-tools/pack, shellcheck/check]
           filters: *filters
+          <<: *with_notification
       # Triggers the next workflow in the Orb Development Kit.
       - orb-tools/continue:
           pipeline-number: << pipeline.number >>
           vcs-type: << pipeline.project.type >>
           requires: [orb-tools/publish]
           filters: *filters
+          <<: *with_notification
