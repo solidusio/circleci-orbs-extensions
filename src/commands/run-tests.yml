@@ -3,6 +3,7 @@ description: >
 
 steps:
   - checkout
+  - dependencies
   - run-tests-solidus-older
   - run-tests-solidus-current
   - run-tests-solidus-master
