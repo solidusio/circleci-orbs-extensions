@@ -9,7 +9,7 @@ parameters:
     default: "14.2"
   elasticsearch_version:
     type: string
-    default: "6.8.0"
+    default: "8.5.3"
 
 docker:
   - image: cimg/ruby:<<parameters.ruby_version>>-browsers
