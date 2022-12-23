@@ -28,12 +28,17 @@ steps:
         RAILS_VERSION: <<parameters.rails_version>>
         SKIP_SOLIDUS_BOLT: "1"
       when: always
+  - run:
+      name: 'Solidus <<parameters.branch>>: Generate .ruby-version'
+      working_directory: <<parameters.working_directory>>
+      command: ruby -e "puts RUBY_VERSION" > .ruby-version
+      when: always
   - restore_cache:
       name: 'Solidus <<parameters.branch>>: Restore Bundler cache'
       keys:
-        - gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "<<parameters.working_directory>>/Gemfile.lock" }}
-        - gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-master
-        - gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-
+        - gems-v3-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "<<parameters.working_directory>>/Gemfile.lock" }}
+        - gems-v3-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-master
+        - gems-v3-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-
       when: always
   - run:
       name: 'Solidus <<parameters.branch>>: Install gems'
@@ -48,7 +53,7 @@ steps:
       when: always
   - save_cache:
       name: 'Solidus <<parameters.branch>>: Save Bundler cache'
-      key: gems-v3-ruby-v2-7-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "<<parameters.working_directory>>/Gemfile.lock" }}
+      key: gems-v3-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "<<parameters.working_directory>>/Gemfile.lock" }}
       paths:
         - <<parameters.working_directory>>/vendor/bundle/<<parameters.branch>>
       when: always
