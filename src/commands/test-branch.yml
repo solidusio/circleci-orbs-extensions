@@ -59,7 +59,7 @@ steps:
       environment:
         SOLIDUS_BRANCH: <<parameters.branch>>
         RAILS_VERSION: <<parameters.rails_version>>
-        TEST_RESULTS_PATH: test-results/gems-v3-ruby-v2-7-solidus-<<parameters.branch>>/results.xml
+        TEST_RESULTS_PATH: test-results/solidus-<<parameters.branch>>/results.xml
       when: always
   - store_artifacts:
       name: 'Solidus <<parameters.branch>>: Store Rails screenshots'
