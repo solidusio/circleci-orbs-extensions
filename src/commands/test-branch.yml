@@ -36,9 +36,9 @@ steps:
   - restore_cache:
       name: 'Solidus <<parameters.branch>>: Restore Bundler cache'
       keys:
-        - gems-v3-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "<<parameters.working_directory>>/Gemfile.lock" }}
-        - gems-v3-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-master
-        - gems-v3-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-
+        - gems-v3.{{ .Environment.CACHE_VERSION }}-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-{{ .Branch }}-{{ checksum "<<parameters.working_directory>>/Gemfile.lock" }}
+        - gems-v3.{{ .Environment.CACHE_VERSION }}-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-master
+        - gems-v3.{{ .Environment.CACHE_VERSION }}-ruby-{{ checksum "<<parameters.working_directory>>/.ruby-version" }}-solidus-<<parameters.branch>>-
       when: always
   - run:
       name: 'Solidus <<parameters.branch>>: Install gems'
