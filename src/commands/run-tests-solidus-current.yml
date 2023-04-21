@@ -8,6 +8,6 @@ parameters:
 
 steps:
   - test-branch:
-      branch: v3.3
+      branch: v3.4
       rails_version: '~> 7.0'
       working_directory: <<parameters.working_directory>>
