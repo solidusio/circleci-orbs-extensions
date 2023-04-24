@@ -15,7 +15,3 @@ steps:
       branch: v3.2
       rails_version: '~> 7.0'
       working_directory: <<parameters.working_directory>>
-  - test-branch:
-      branch: v3.1
-      rails_version: '~> 6.1'
-      working_directory: <<parameters.working_directory>>
