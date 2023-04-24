@@ -17,21 +17,21 @@ usage:
     run-specs-with-postgres:
       executor:
         name: solidusio_extensions/postgres
-        ruby_version: '3.1'
+        ruby_version: '3.2'
       steps:
         - browser-tools/install-browser-tools
         - solidusio_extensions/run-tests
     run-specs-with-mysql:
       executor:
         name: solidusio_extensions/mysql
-        ruby_version: '3.0'
+        ruby_version: '3.1'
       steps:
         - browser-tools/install-browser-tools
         - solidusio_extensions/run-tests
     run-specs-with-sqlite:
       executor:
         name: solidusio_extensions/sqlite
-        ruby_version: '2.7'
+        ruby_version: '3.0'
       steps:
         - browser-tools/install-browser-tools
         - solidusio_extensions/run-tests
