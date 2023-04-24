@@ -4,7 +4,7 @@ description:
 parameters:
   branch:
     type: string
-    default: master
+    default: main
   command:
     type: string
     default: bundle exec rake

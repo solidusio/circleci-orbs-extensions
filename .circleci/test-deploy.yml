@@ -32,7 +32,7 @@ jobs:
       ruby_version: "3.2"
     steps:
       - checkout
-      - extensions/run-tests-solidus-master:
+      - extensions/run-tests-solidus-main:
           working_directory: '~/project/solidus_dummy_extension'
       - extensions/store-test-results
   test-run-linting-code:
