@@ -9,28 +9,36 @@ filters: &filters
 
 jobs:
   test-run-with-postgres:
-    executor: extensions/postgres
+    executor:
+      name: extensions/postgres
+      ruby_version: "3.0"
     steps:
       - checkout
       - extensions/run-tests-solidus-older:
           working_directory: '~/project/solidus_dummy_extension'
       - extensions/store-test-results
   test-run-with-mysql:
-    executor: extensions/mysql
+    executor:
+      name: extensions/mysql
+      ruby_version: "3.1"
     steps:
       - checkout
       - extensions/run-tests-solidus-current:
           working_directory: '~/project/solidus_dummy_extension'
       - extensions/store-test-results
   test-run-with-sqlite:
-    executor: extensions/sqlite
+    executor:
+      name: extensions/sqlite
+      ruby_version: "3.2"
     steps:
       - checkout
       - extensions/run-tests-solidus-master:
           working_directory: '~/project/solidus_dummy_extension'
       - extensions/store-test-results
   test-run-linting-code:
-    executor: extensions/sqlite-memory
+    executor:
+      name: extensions/sqlite-memory
+      ruby_version: "3.2"
     steps:
       - extensions/lint-code:
           working_directory: '~/project/solidus_dummy_extension'
