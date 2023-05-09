@@ -6,5 +6,5 @@ steps:
   - dependencies
   - run-tests-solidus-older
   - run-tests-solidus-current
-  - run-tests-solidus-master
+  - run-tests-solidus-main
   - store-test-results

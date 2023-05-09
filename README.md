@@ -54,14 +54,14 @@ workflows:
       - run-specs-with-sqlite
       - lint-code
 
-  "Weekly run specs against master":
+  "Weekly run specs against main":
     triggers:
       - schedule:
           cron: "0 0 * * 4" # every Thursday
           filters:
             branches:
               only:
-                - master
+                - main
     jobs:
       - run-specs-with-sqlite
 ```
