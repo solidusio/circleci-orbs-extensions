@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ENV['DB'] = 'sqlite' if ENV['DB'] == 'sqlite3'
+
 require 'solidus_dev_support/rake_tasks'
 SolidusDevSupport::RakeTasks.install
 
