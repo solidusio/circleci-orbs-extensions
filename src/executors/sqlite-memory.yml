@@ -9,6 +9,6 @@ docker:
   - image: cimg/ruby:<<parameters.ruby_version>>-browsers
     environment:
       RAILS_ENV: test
-      DB: sqlite
+      DB: sqlite3
       DATABASE_URL: sqlite3::memory:?pool=1
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: true

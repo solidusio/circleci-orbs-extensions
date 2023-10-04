@@ -6,38 +6,14 @@ then
   set -x
 fi
 
-case "$DB" in
-postgres|postgresql)
-  RAILSDB="postgresql"
-  ;;
-mysql)
-  RAILSDB="mysql"
-  ;;
-sqlite3|sqlite)
-  RAILSDB="sqlite3"
-  ;;
-'')
-  echo "~~> Use 'export DB=[postgres|mysql|sqlite]' to control the DB adapter"
-  RAILSDB="sqlite3"
-  ;;
-*)
-  echo "Invalid value specified for the Solidus sandbox: DB=\"$DB\"."
-  echo "Please use 'postgres', 'mysql', or 'sqlite' instead."
-  exit 1
-  ;;
-esac
-echo "~~> Using $RAILSDB as the database engine"
-
-if [ -n $SOLIDUS_BRANCH ]
+if [ -z "$SOLIDUS_BRANCH" ]
 then
-  BRANCH=$SOLIDUS_BRANCH
-else
-  echo "~~> Use 'export SOLIDUS_BRANCH=[main|v4.0|...]' to control the Solidus branch"
-  BRANCH="main"
+  echo "~~> Use 'export SOLIDUS_BRANCH=[main|v3.2|...]' to control the Solidus branch"
+  SOLIDUS_BRANCH="main"
 fi
-echo "~~> Using branch $BRANCH of solidus"
+echo "~~> Using branch $SOLIDUS_BRANCH of solidus"
 
-if [ -z $SOLIDUS_FRONTEND ]
+if [ -z "$SOLIDUS_FRONTEND" ]
 then
   echo "~~> Use 'export SOLIDUS_FRONTEND=[solidus_frontend|solidus_starter_frontend]' to control the Solidus frontend"
   SOLIDUS_FRONTEND="solidus_frontend"

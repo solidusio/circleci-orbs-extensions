@@ -4,22 +4,18 @@ description: >
 parameters:
   working_directory:
     type: string
-    default: '~/project'
+    default: "~/project"
 
 steps:
   - test-branch:
+      branch: v4.1
+      rails_version: "~> 7.0"
+      working_directory: <<parameters.working_directory>>
+  - test-branch:
       branch: v4.0
-      rails_version: '~> 7.0'
+      rails_version: "~> 7.0"
       working_directory: <<parameters.working_directory>>
   - test-branch:
       branch: v3.4
-      rails_version: '~> 7.0'
-      working_directory: <<parameters.working_directory>>
-  - test-branch:
-      branch: v3.3
-      rails_version: '~> 7.0'
-      working_directory: <<parameters.working_directory>>
-  - test-branch:
-      branch: v3.2
-      rails_version: '~> 7.0'
+      rails_version: "~> 7.0"
       working_directory: <<parameters.working_directory>>

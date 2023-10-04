@@ -19,24 +19,26 @@ usage:
         name: solidusio_extensions/postgres
         ruby_version: '3.2'
       steps:
-        - browser-tools/install-browser-tools
+        - browser-tools/install-chrome
         - solidusio_extensions/run-tests
     run-specs-with-mysql:
       executor:
         name: solidusio_extensions/mysql
         ruby_version: '3.1'
       steps:
-        - browser-tools/install-browser-tools
+        - browser-tools/install-chrome
         - solidusio_extensions/run-tests
     run-specs-with-sqlite:
       executor:
         name: solidusio_extensions/sqlite
         ruby_version: '3.0'
       steps:
-        - browser-tools/install-browser-tools
+        - browser-tools/install-chrome
         - solidusio_extensions/run-tests
   lint-code:
-    executor: solidusio_extensions/sqlite-memory
+    executor:
+      name: solidusio_extensions/sqlite
+      ruby_version: '2.7'
     steps:
       - solidusio_extensions/lint-code
 
@@ -46,6 +48,8 @@ usage:
         - run-specs-with-postgres
         - run-specs-with-mysql
         - run-specs-with-sqlite
+        - lint-code
+
     "Weekly run specs against main":
       triggers:
         - schedule:
