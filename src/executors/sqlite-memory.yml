@@ -3,7 +3,7 @@ description: Run specs with an in-memory SQLite
 parameters:
   ruby_version:
     type: string
-    default: "2.7"
+    default: "3.0"
 
 docker:
   - image: cimg/ruby:<<parameters.ruby_version>>-browsers
