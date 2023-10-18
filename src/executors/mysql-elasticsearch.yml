@@ -3,7 +3,7 @@ description: Run specs with MySQL and ElasticSearch
 parameters:
   ruby_version:
     type: string
-    default: "2.7"
+    default: "3.0"
   mysql_version:
     type: string
     default: "5.7"

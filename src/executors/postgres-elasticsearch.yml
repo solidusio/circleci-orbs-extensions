@@ -3,7 +3,7 @@ description: Run specs with PostgreSQL and ElasticSearch
 parameters:
   ruby_version:
     type: string
-    default: "2.7"
+    default: "3.0"
   postgres_version:
     type: string
     default: "14.2"
