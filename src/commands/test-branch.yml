@@ -82,10 +82,13 @@ steps:
       working_directory: <<parameters.working_directory>>
       command: |
         # Not all commands will create a spec/dummy folder (e.g. the linter job)
-        if [[ -d "spec/dummy" ]]; then
+        if [[ -e "spec/dummy/bin/rails" ]]; then
           cd spec/dummy && \
             bin/rails db:environment:set RAILS_ENV=test && \
             bin/rails db:drop
+        # Not all dummy apps have executables
+        elif [[ -e bin/rake ]]; then
+          bin/rake db:drop
         fi
       when: always
   - run:
