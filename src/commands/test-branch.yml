@@ -87,7 +87,7 @@ steps:
             bin/rails db:environment:set RAILS_ENV=test && \
             bin/rails db:drop
         # Not all dummy apps have executables
-        elif [[ -e bin/rake ]]; then
+        elif [[ -e bin/rake ]] && [[ -d "spec/dummy" ]]; then
           bin/rake db:drop
         fi
       when: always
