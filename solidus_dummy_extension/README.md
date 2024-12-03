@@ -1,7 +1,7 @@
 # Solidus Dummy Extension
 
 [![CircleCI](https://circleci.com/gh/solidusio/circleci-orbs-extensions.svg?style=shield)](https://circleci.com/gh/solidusio/circleci-orbs-extensions)
-[![codecov](https://codecov.io/gh/solidusio/circleci-orbs-extensions/branch/master/graph/badge.svg)](https://codecov.io/gh/solidusio/circleci-orbs-extensions)
+[![codecov](https://codecov.io/gh/solidusio/circleci-orbs-extensions/branch/main/graph/badge.svg)](https://codecov.io/gh/solidusio/circleci-orbs-extensions)
 
 <!-- Explain what your extension does. -->
 

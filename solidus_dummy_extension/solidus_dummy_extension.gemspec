@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/solidusio/circleci-orbs-extensions'
-  spec.metadata['changelog_uri'] = 'https://github.com/solidusio/circleci-orbs-extensions/blob/master/CHANGELOG.md'
+  spec.metadata['changelog_uri'] = 'https://github.com/solidusio/circleci-orbs-extensions/blob/main/CHANGELOG.md'
 
   spec.required_ruby_version = Gem::Requirement.new('>= 2.5', '< 4')
 
