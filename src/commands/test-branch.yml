@@ -13,7 +13,7 @@ parameters:
     default: Runs tests
   rails_version:
     type: string
-    default: '>0.a'
+    default: '~> 7.0'
   working_directory:
     type: string
     default: '~/project'
